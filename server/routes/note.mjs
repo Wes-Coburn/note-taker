@@ -15,7 +15,7 @@ router.get("/", async (_req, res) => {
 // get note by id
 router.get("/:id", async (req, res) => {
   let collection = db.collection(notes_collection);
-  let query = {_id: new ObjectId(req.params.id)};
+  let query = { _id: new ObjectId(req.params.id) };
   let result = await collection.findOne(query);
 
   if (!result) res.send("Not found").status(404);
@@ -24,25 +24,23 @@ router.get("/:id", async (req, res) => {
 
 // create note
 router.post("/", async (req, res) => {
-  let newDocument = {
-    name: req.body.name,
-    position: req.body.position,
-    level: req.body.level,
+  let newNote = {
+    text: req.body.text,
   };
   let collection = db.collection(notes_collection);
-  let result = await collection.insertOne(newDocument);
+  let result = await collection.insertOne(newNote);
   res.send(result).status(204);
 });
 
 // update note
 router.patch("/:id", async (req, res) => {
   const query = { _id: new ObjectId(req.params.id) };
-  const updates =  {
+  const updates = {
     $set: {
       name: req.body.name,
       position: req.body.position,
-      level: req.body.level
-    }
+      level: req.body.level,
+    },
   };
 
   let collection = db.collection(notes_collection);

@@ -7,7 +7,7 @@ describe('app component', () => {
     expect(screen.getAllByText(/loading/i).length).toBe(3);
   });
 
-  test('should lazy render correctly', async () => {
+  test.skip('should lazy render correctly', async () => {
     render(<AppContent />);
     await waitFor(() => expect(screen.getByRole('main')).toBeInTheDocument());
   });

@@ -8,7 +8,7 @@ import NewNote from '../Notes/NewNote';
 
 const Login = lazy(() => import('../Login'));
 const Home = lazy(() => import('../Home'));
-const NotesList = lazy(() => import('../Notes/NotesList'));
+const NotesList = lazy(() => import('../Notes/NoteList'));
 const NotFound = lazy(() => import('../NotFound'));
 
 /** uncomment if subdomain is configured in responsive.ts */

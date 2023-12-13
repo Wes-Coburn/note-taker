@@ -1,15 +1,19 @@
 /* eslint-disable no-underscore-dangle */
 import { useEffect, lazy } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
-import { Note as NoteType, selectNotes, selectNotesStatus } from './notesSlice';
-import Note from './Note';
-import Loading from '../Loading';
+import { useAppSelector } from '../../../app/hooks';
+import {
+  Note as NoteType,
+  selectAllNotes,
+  selectNotesStatus,
+} from '../notesSlice';
+import Note from '../Note';
+import Loading from '../../Loading';
 
-const NotFound = lazy(() => import('../NotFound'));
+const NotFound = lazy(() => import('../../NotFound'));
 
 export default function FindNote() {
-  const notes = useAppSelector(selectNotes);
+  const allNotes = useAppSelector(selectAllNotes);
   const notesState = useAppSelector(selectNotesStatus);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -22,7 +26,7 @@ export default function FindNote() {
   }, [searchParams, setSearchParams]);
 
   const noteId = searchParams.get('noteId');
-  const foundNote = notes.find((note: NoteType) => note._id === noteId);
+  const foundNote = allNotes.find((note: NoteType) => note._id === noteId);
 
   if (foundNote === undefined) return <NotFound />; // TODO: figure out why, action is dispatched from NotesList
 

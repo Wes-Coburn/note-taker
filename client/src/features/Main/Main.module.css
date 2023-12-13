@@ -1,4 +1,6 @@
 Main {
   grid-area: middle;
   min-height: 50vh;
+  display: flex;
+  justify-content: center;
 }

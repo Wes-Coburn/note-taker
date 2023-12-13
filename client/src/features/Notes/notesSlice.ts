@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
-import { RootState, ThunkStatus } from '../../app/store';
+import { RootState, ThunkStatus, ThunkStatusOptions } from '../../app/store';
 import API from '../../app/api';
 
 export interface Note {
@@ -10,40 +10,56 @@ export interface Note {
 }
 
 export interface NotesState extends ThunkStatus {
-  value: Array<Note>;
+  allNotes: Array<Note>;
+  newNote: string;
 }
 
 const initialState: NotesState = {
-  value: [],
+  allNotes: [],
+  newNote: '',
   status: 'idle',
 };
 
 export const getAllNotes = createAsyncThunk('notes/getAllNotes', async () => {
-  const response = await fetch(API.getAllNotes());
+  const response = await API.getAllNotes();
   const jsonResponse = await response.json();
   return jsonResponse;
 });
 
+export const saveNewNote = createAsyncThunk(
+  'notes/saveNewNote',
+  async (note: string) => {
+    const response = await API.saveNewNote(note);
+    const jsonResponse = await response.json();
+    return jsonResponse;
+  },
+);
+
 export const notesSlice = createSlice({
   name: 'notes',
   initialState,
-  reducers: {},
+  reducers: {
+    setNewNote: (state, action: PayloadAction<string>) => {
+      state.newNote = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllNotes.pending, (state) => {
-        state.status = 'pending';
+        state.status = ThunkStatusOptions.loading;
       })
       .addCase(getAllNotes.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.value = action.payload;
+        state.status = ThunkStatusOptions.idle;
+        state.allNotes = action.payload;
       })
       .addCase(getAllNotes.rejected, (state) => {
-        state.status = 'failed';
+        state.status = ThunkStatusOptions.failed;
       });
   },
 });
 
-// export const {} = notesSlice.actions;
-export const selectNotes = (state: RootState) => state.notes.value;
+export const { setNewNote } = notesSlice.actions;
+export const selectAllNotes = (state: RootState) => state.notes.allNotes;
+export const selectNewNote = (state: RootState) => state.notes.newNote;
 export const selectNotesStatus = (state: RootState) => state.notes.status;
 export default notesSlice.reducer;

@@ -19,6 +19,16 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
+export const ThunkStatusOptions = {
+  loading: 'loading',
+  idle: 'idle',
+  failed: 'failed',
+};
+const AllThunkStatus = [
+  ThunkStatusOptions.loading,
+  ThunkStatusOptions.idle,
+  ThunkStatusOptions.failed,
+] as const;
 export interface ThunkStatus {
-  status: 'pending' | 'idle' | 'failed';
+  status: (typeof AllThunkStatus)[number];
 }
