@@ -6,7 +6,6 @@ import { PATHS } from './routes';
 import Heading from '../features/Heading';
 import Loading from '../features/Loading';
 import Error from '../features/Error';
-// import responsive from './responsive';
 import './App.css';
 
 const Header = lazy(() => import('../features/Header'));
@@ -14,8 +13,6 @@ const Main = lazy(() => import('../features/Main'));
 const Footer = lazy(() => import('../features/Footer'));
 
 export function AppContent() {
-  // responsive();
-
   return (
     <div className="App">
       <ErrorBoundary fallback={<Error />}>

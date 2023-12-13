@@ -2,14 +2,21 @@ import express from "express";
 import db from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
 
+const clientURL = () => process.env.CLIENT_URL;
 const notes_collection = "notes";
 const router = express.Router();
+
+// authentication middleware
+router.use((req, res, next) => {
+  if (req.headers.origin === clientURL()) next();
+  else res.status(401).send("Unauthorized");
+});
 
 // get all notes
 router.get("/", async (_req, res) => {
   let collection = db.collection(notes_collection);
   let results = await collection.find({}).toArray();
-  res.send(results).status(200);
+  res.status(200).send(results);
 });
 
 // get note by id
@@ -18,8 +25,8 @@ router.get("/:id", async (req, res) => {
   let query = { _id: new ObjectId(req.params.id) };
   let result = await collection.findOne(query);
 
-  if (!result) res.send("Not found").status(404);
-  else res.send(result).status(200);
+  if (!result) res.status(404).send("Not found");
+  else res.status(200).send(result);
 });
 
 // create note
@@ -29,9 +36,10 @@ router.post("/", async (req, res) => {
   };
   let collection = db.collection(notes_collection);
   let result = await collection.insertOne(newNote);
-  res.send(result).status(204);
+  res.status(204).send(result);
 });
 
+/*
 // update note
 router.patch("/:id", async (req, res) => {
   const query = { _id: new ObjectId(req.params.id) };
@@ -57,5 +65,6 @@ router.delete("/:id", async (req, res) => {
 
   res.send(result).status(200);
 });
+*/
 
 export default router;

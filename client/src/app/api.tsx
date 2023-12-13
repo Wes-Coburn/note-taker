@@ -1,5 +1,5 @@
-const serverURL = import.meta.env.VITE_SERVER_URL;
-const apiURL = (path: string) => `${serverURL}/${path}`;
+const serverURL = () => import.meta.env.VITE_SERVER_URL;
+const apiURL = (path: string) => `${serverURL()}/${path}`;
 
 const jsonHeaders = {
   Accept: 'application/json',
@@ -7,7 +7,7 @@ const jsonHeaders = {
 };
 
 const API = {
-  getAllNotes: () => fetch(apiURL('note'), { method: 'GET' }),
+  getAllNotes: () => fetch(apiURL('note')),
   saveNewNote: (text: string) =>
     fetch(apiURL('note'), {
       method: 'POST',
