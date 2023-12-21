@@ -2,14 +2,26 @@ import express from "express";
 import db from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
 
-const clientURL = () => process.env.CLIENT_URL;
 const notes_collection = "notes";
 const router = express.Router();
 
+const testUsername = process.env.TEST_USERNAME;
+const testPassword = process.env.TEST_PASSWORD;
+
+const isAuthenticated = (auth) => {
+  if (!auth) return false;
+  const authParts = auth.split(":");
+  if (authParts.length !== 2) return false;
+  const username = authParts[0];
+  const password = authParts[1];
+  return (username === testUsername && password === testPassword);
+}
+
 // authentication middleware
 router.use((req, res, next) => {
-  if (req.headers.origin === clientURL()) next();
-  else res.status(401).send("Unauthorized");
+  if (isAuthenticated(req.headers.authorization)) {
+    next();
+  } else res.status(401).send("ERROR 401: UNAUTHORIZED");
 });
 
 // get all notes
