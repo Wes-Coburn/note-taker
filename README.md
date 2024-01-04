@@ -1,16 +1,14 @@
-# Template-MERN-App
+# Note-Taker
 
 [@Wes-Coburn](https://github.com/Wes-Coburn)
-
-```shell
-npx degit Wes-Coburn/template-MERN-app my-app
-```
 
 ---
 
 ## Description
 
--> Template for a full-stack [MERN](https://www.mongodb.com/mern-stack#:~:text=MERN%20stands%20for%20MongoDB%2C%20Express,a%20client%2Dside%20JavaScript%20framework) app (MongoDB + Express + React + Node)
+-> Lightweight note taking app. A full-stack MERN app with TailwindCSS.
+
+-> Generated from my [Web App Template](https://github.com/Wes-Coburn/template-MERN-app).
 
 ## Technologies
 
@@ -19,6 +17,7 @@ npx degit Wes-Coburn/template-MERN-app my-app
 - React
 - Redux
 - React-Router
+- TailwindCSS
 - Vite
 - Vitest
 - React Testing Library
