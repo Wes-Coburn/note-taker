@@ -6,7 +6,7 @@
 
 ## Description
 
--> Lightweight note taking app. A full-stack MERN app with TailwindCSS.
+-> Lightweight note taking app. A full-stack MERN app with TypeScript and TailwindCSS.
 
 -> Implementation of my [MERN Template](https://github.com/Wes-Coburn/template-MERN-app).
 
