@@ -2,37 +2,26 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import { lazy, Suspense } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { PATHS } from './routes';
+import ROUTES from './routes';
 import Heading from '../features/Heading';
 import Loading from '../features/Loading';
 import Error from '../features/Error';
-import './App.css';
 
 const Header = lazy(() => import('../features/Header'));
 const Main = lazy(() => import('../features/Main'));
 const Footer = lazy(() => import('../features/Footer'));
 
+const suspend = (element: JSX.Element) => (
+  <Suspense fallback={<Loading />}>{element}</Suspense>
+);
+
 export function AppContent() {
   return (
-    <div className="App">
-      <ErrorBoundary fallback={<Error />}>
-        <div className="Grid-top">
-          <Suspense fallback={<Loading />}>
-            <Header />
-          </Suspense>
-        </div>
-        <div className="Grid-mid">
-          <Suspense fallback={<Loading />}>
-            <Main />
-          </Suspense>
-        </div>
-        <div className="Grid-btm">
-          <Suspense fallback={<Loading />}>
-            <Footer />
-          </Suspense>
-        </div>
-      </ErrorBoundary>
-    </div>
+    <ErrorBoundary fallback={<Error />}>
+      {suspend(<Header />)}
+      {suspend(<Main />)}
+      {suspend(<Footer />)}
+    </ErrorBoundary>
   );
 }
 
@@ -41,7 +30,7 @@ function App() {
   return (
     <HelmetProvider>
       <Router>
-        <Heading pageURL={PATHS.ROOT()} />
+        <Heading pageURL={ROUTES.ROOT()} />
         <AppContent />
       </Router>
     </HelmetProvider>

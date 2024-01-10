@@ -1,37 +1,40 @@
-import { setNewNote, selectNewNote, saveNewNote } from '../notesSlice';
+import { setNewNote, selectCurrentNote, createNewNote } from '../notesSlice';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import styles from './NewNote.module.css';
 
 export default function NewNote() {
   const dispatch = useAppDispatch();
-  const newNote = useAppSelector(selectNewNote);
+  const newNote = useAppSelector(selectCurrentNote);
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+  const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
+    event,
+  ) => {
     dispatch(setNewNote(event.target.value));
   };
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    // eslint-disable-next-line no-alert
-    alert(newNote);
-    dispatch(saveNewNote(newNote));
+    dispatch(createNewNote(newNote));
     dispatch(setNewNote(''));
   };
 
   return (
-    <div className={styles.NewNoteContainer}>
-      <p>New Note</p>
+    <div className="mx-6">
+      <p className="pb-2">New Note</p>
       <form onSubmit={handleSubmit}>
-        <div className={styles.NewNoteInput}>
-          <input
-            id="newNoteInput"
-            type="text"
+        <div>
+          <textarea
             value={newNote}
             onChange={handleChange}
             required
+            className="w-full"
           />
         </div>
-        <button type="submit">Save</button>
+        <button
+          type="submit"
+          className="rounded-lg bg-gray-300 px-2 py-1 hover:bg-gray-400"
+        >
+          Save
+        </button>
       </form>
     </div>
   );

@@ -1,37 +1,26 @@
 import { lazy } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import ROUTES, { PATHS } from '../../app/routes';
-import FindNote from '../Notes/FindNote';
-import styles from './Main.module.css';
+import { Routes, Route } from 'react-router-dom';
+import ROUTES from '../../app/routes';
 import NewNote from '../Notes/NewNote';
 
-const Login = lazy(() => import('../Login'));
-const Home = lazy(() => import('../Home'));
 const NotesList = lazy(() => import('../Notes/NoteList'));
 const NotFound = lazy(() => import('../NotFound'));
 
+function MainContent() {
+  return (
+    <div>
+      <NewNote />
+      <NotesList />
+    </div>
+  );
+}
+
 export default function Main() {
   return (
-    <main role="main" className={styles.Main}>
+    <main role="main" className="min-h-dvh py-6 text-center">
       <Routes>
-        <Route
-          path={PATHS.ROOT()}
-          element={<Navigate to={ROUTES.getLogin()} replace />}
-        />
-        <Route path={PATHS.login()} element={<Login />} />
-
-        <Route path={PATHS.user()}>
-          <Route
-            path={PATHS.ROOT()}
-            element={<Navigate to={PATHS.home()} replace />}
-          />
-          <Route path={PATHS.home()} element={<Home />} />
-          <Route path={PATHS.allNotes()} element={<NotesList />} />
-          <Route path={PATHS.findNote()} element={<FindNote />} />
-          <Route path={PATHS.newNote()} element={<NewNote />} />
-        </Route>
-
-        <Route path={PATHS.NOT_FOUND()} element={<NotFound />} />
+        <Route path={ROUTES.ROOT()} element={<MainContent />} />
+        <Route path={ROUTES.NOT_FOUND()} element={<NotFound />} />
       </Routes>
     </main>
   );

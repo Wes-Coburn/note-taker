@@ -14,9 +14,9 @@ export default function NotesList() {
   }, [dispatch]);
 
   const notesList = allNotes.map((note) => (
-    <Note key={note._id} text={note.text} />
+    <Note key={note._id} _id={note._id} text={note.text} />
   ));
 
   // TODO: Replace <NotFound /> with 'no notes' message
-  return notesList.length > 0 ? <div>{notesList}</div> : <NotFound />;
+  return notesList.length > 0 ? <div>{notesList.reverse()}</div> : <NotFound />;
 }

@@ -36,6 +36,6 @@ export default function FindNote() {
     case 'failed':
       return <NotFound />;
     default:
-      return <Note text={foundNote.text} />;
+      return <Note _id={foundNote._id} text={foundNote.text} />;
   }
 }
