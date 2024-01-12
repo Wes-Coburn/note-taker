@@ -22,9 +22,10 @@
 - Vitest
 - Node
 - React Testing Library
+- ESLint
 - [React-Helmet](https://www.npmjs.com/package/react-helmet)
 - [React-Awesome-Reveal](https://www.npmjs.com/package/react-awesome-reveal)
-- ESLint
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 
 ## Development
 
