@@ -1,8 +1,10 @@
+import { selectAuthToken } from '../../User/userSlice';
 import { setNewNote, selectCurrentNote, createNewNote } from '../notesSlice';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 
 export default function NewNote() {
   const dispatch = useAppDispatch();
+  const authToken = useAppSelector(selectAuthToken);
   const newNote = useAppSelector(selectCurrentNote);
 
   const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
@@ -13,7 +15,7 @@ export default function NewNote() {
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    dispatch(createNewNote(newNote));
+    dispatch(createNewNote({ authToken, text: newNote }));
     dispatch(setNewNote(''));
   };
 

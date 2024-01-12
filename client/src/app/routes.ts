@@ -11,8 +11,10 @@ export const CANONICAL = {
 };
 
 const ROUTES = {
-  ROOT: () => '',
+  ROOT: () => '/',
   NOT_FOUND: () => '*',
+  login: () => 'login',
+  signup: () => 'signup',
 };
 
 export default ROUTES;

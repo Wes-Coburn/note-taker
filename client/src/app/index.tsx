@@ -3,13 +3,13 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { lazy, Suspense } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import ROUTES from './routes';
-import Heading from '../features/Heading';
-import Loading from '../features/Loading';
-import Error from '../features/Error';
+import Heading from '../features/Sections/Heading';
+import Loading from '../features/Utilities/Loading';
+import Error from '../features/Utilities/Error';
 
-const Header = lazy(() => import('../features/Header'));
-const Main = lazy(() => import('../features/Main'));
-const Footer = lazy(() => import('../features/Footer'));
+const Header = lazy(() => import('../features/Sections/Header'));
+const Main = lazy(() => import('../features/Sections/Main'));
+const Footer = lazy(() => import('../features/Sections/Footer'));
 
 const suspend = (element: JSX.Element) => (
   <Suspense fallback={<Loading />}>{element}</Suspense>

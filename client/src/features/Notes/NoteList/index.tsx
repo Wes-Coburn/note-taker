@@ -1,22 +1,21 @@
 /* eslint-disable no-underscore-dangle */
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { selectAllNotes, getAllNotes } from '../notesSlice';
 import Note from '../Note';
-import NotFound from '../../NotFound';
+import { Note as NoteType } from '../notesSlice';
+import NotFound from '../../Utilities/NotFound';
 
-export default function NotesList() {
-  const allNotes = useAppSelector(selectAllNotes);
-  const dispatch = useAppDispatch();
+interface IProps {
+  notes: Array<NoteType>;
+}
 
-  useEffect(() => {
-    dispatch(getAllNotes());
-  }, [dispatch]);
+export default function NotesList({ notes }: IProps) {
+  try {
+    const notesList = notes.map((note) => (
+      <Note key={note._id} _id={note._id} text={note.text} />
+    ));
 
-  const notesList = allNotes.map((note) => (
-    <Note key={note._id} _id={note._id} text={note.text} />
-  ));
-
-  // TODO: Replace <NotFound /> with 'no notes' message
-  return notesList.length > 0 ? <div>{notesList.reverse()}</div> : <NotFound />;
+    // TODO: Replace <NotFound /> with 'no notes' message
+    return notesList.length > 0 ? <>{notesList.reverse()}</> : <NotFound />;
+  } catch (e) {
+    return <NotFound />;
+  }
 }

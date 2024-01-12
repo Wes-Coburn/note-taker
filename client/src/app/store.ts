@@ -1,11 +1,11 @@
 /* eslint-disable import/no-cycle */
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/Counter/counterSlice';
+import userReducer from '../features/User/userSlice';
 import notesReducer from '../features/Notes/notesSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    user: userReducer,
     notes: notesReducer,
   },
 });

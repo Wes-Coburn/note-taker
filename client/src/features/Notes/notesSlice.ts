@@ -1,7 +1,7 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// eslint-disable-next-line import/no-cycle
 import { RootState, ThunkStatus, ThunkStatusOptions } from '../../app/store';
 import API from '../../app/api';
 
@@ -21,26 +21,29 @@ const initialState: NotesState = {
   status: 'idle',
 };
 
-export const getAllNotes = createAsyncThunk('notes/getAllNotes', async () => {
-  const response = await API.getAllNotes();
-  const jsonResponse = await response.json();
-  return jsonResponse;
-});
+export const getAllNotes = createAsyncThunk(
+  'notes/getAllNotes',
+  async (authToken: string) => {
+    const response = await API.getAllNotes(authToken);
+    const jsonResponse = await response.json();
+    return jsonResponse;
+  },
+);
 
 export const createNewNote = createAsyncThunk(
   'notes/createNewNote',
-  async (text: string, thunkAPI) => {
-    const response = await API.createNewNote(text);
+  async (arg: { authToken: string; text: string }, thunkAPI) => {
+    const response = await API.createNewNote(arg.authToken, arg.text);
     const jsonResponse = await response.json();
-    thunkAPI.dispatch(getAllNotes());
+    thunkAPI.dispatch(getAllNotes(arg.authToken));
     return jsonResponse;
   },
 );
 
 export const updateNote = createAsyncThunk(
   'notes/updateNote',
-  async (arg: { _id: string; text: string }) => {
-    const response = await API.updateNote(arg._id, arg.text);
+  async (arg: { authToken: string; note: Note }) => {
+    const response = await API.updateNote(arg);
     const jsonResponse = await response.json();
     return jsonResponse;
   },
@@ -48,8 +51,8 @@ export const updateNote = createAsyncThunk(
 
 export const deleteNote = createAsyncThunk(
   'notes/deleteNote',
-  async (arg: { _id: string }) => {
-    const response = await API.deleteNote(arg._id);
+  async (arg: { authToken: string; note: Note }) => {
+    const response = await API.deleteNote(arg.authToken, arg.note._id);
     const jsonResponse = await response.json();
     return jsonResponse;
   },
@@ -83,10 +86,10 @@ export const notesSlice = createSlice({
       .addCase(updateNote.fulfilled, (state, action) => {
         state.status = ThunkStatusOptions.idle;
         const updatedNote = state.allNotes.find(
-          (note) => note._id === action.meta.arg._id,
+          (note) => note._id === action.meta.arg.note._id,
         );
         if (updatedNote) {
-          updatedNote.text = action.meta.arg.text;
+          updatedNote.text = action.meta.arg.note.text;
         }
       })
       // deleteNote
@@ -96,7 +99,7 @@ export const notesSlice = createSlice({
       .addCase(deleteNote.fulfilled, (state, action) => {
         state.status = ThunkStatusOptions.idle;
         state.allNotes = state.allNotes.filter(
-          (note) => note._id !== action.meta.arg._id,
+          (note) => note._id !== action.meta.arg.note._id,
         );
       });
   },

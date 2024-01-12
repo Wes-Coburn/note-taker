@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
-import { CANONICAL } from '../../app/routes';
-import ASSETS from '../../assets';
-import * as appInfo from '../../../appInfo.json';
+import { CANONICAL } from '../../../app/routes';
+import ASSETS from '../../../assets';
+import * as appInfo from '../../../../appInfo.json';
 
 type IProps = {
   pageURL: string;

@@ -1,17 +1,16 @@
-import { MongoClient } from "mongodb";
+/* eslint-disable no-console */
+import { MongoClient } from 'mongodb';
 
-const connectionString = process.env.ATLAS_URI || "";
-
+const connectionString = process.env.ATLAS_URI || '';
 const client = new MongoClient(connectionString);
-
 let conn;
+
 try {
-  console.log("Connecting to MongoDB Atlas...");
+  console.log('Connecting to MongoDB Atlas...');
   conn = await client.connect();
-} catch(e) {
+} catch (e) {
   console.error(e);
 }
 
-let db = conn.db("note_taker");
-
+const db = conn.db('note_taker');
 export default db;
