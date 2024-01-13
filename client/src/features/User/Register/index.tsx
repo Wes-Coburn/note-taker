@@ -40,6 +40,7 @@ export default function Register() {
     if (!usernamePattern.test(target.value)) {
       target.setCustomValidity(invalidUsernameMessage);
     } else target.setCustomValidity('');
+    target.reportValidity();
   };
 
   const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = ({
@@ -49,6 +50,7 @@ export default function Register() {
     if (!passwordPattern.test(target.value)) {
       target.setCustomValidity(invalidPasswordMessage);
     } else target.setCustomValidity('');
+    target.reportValidity();
   };
 
   const handlePasswordConfirmChange: React.ChangeEventHandler<
@@ -58,6 +60,7 @@ export default function Register() {
     if (password !== target.value) {
       target.setCustomValidity(invalidPasswordConfirmMessage);
     } else target.setCustomValidity('');
+    target.reportValidity();
   };
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
