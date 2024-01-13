@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState, ThunkStatus, ThunkStatusOptions } from '../../app/store';
+import { RootState, ThunkStatus } from '../../app/store';
 import API from '../../app/api';
 
 export interface Note {
@@ -70,21 +70,21 @@ export const notesSlice = createSlice({
     builder
       // getAllNotes
       .addCase(getAllNotes.pending, (state) => {
-        state.status = ThunkStatusOptions.loading;
+        state.status = 'loading';
       })
       .addCase(getAllNotes.fulfilled, (state, action) => {
-        state.status = ThunkStatusOptions.idle;
+        state.status = 'idle';
         state.allNotes = action.payload;
       })
       .addCase(getAllNotes.rejected, (state) => {
-        state.status = ThunkStatusOptions.failed;
+        state.status = 'failed';
       })
       // updateNote
       .addCase(updateNote.pending, (state) => {
-        state.status = ThunkStatusOptions.loading;
+        state.status = 'loading';
       })
       .addCase(updateNote.fulfilled, (state, action) => {
-        state.status = ThunkStatusOptions.idle;
+        state.status = 'idle';
         const updatedNote = state.allNotes.find(
           (note) => note._id === action.meta.arg.note._id,
         );
@@ -94,10 +94,10 @@ export const notesSlice = createSlice({
       })
       // deleteNote
       .addCase(deleteNote.pending, (state) => {
-        state.status = ThunkStatusOptions.loading;
+        state.status = 'loading';
       })
       .addCase(deleteNote.fulfilled, (state, action) => {
-        state.status = ThunkStatusOptions.idle;
+        state.status = 'idle';
         state.allNotes = state.allNotes.filter(
           (note) => note._id !== action.meta.arg.note._id,
         );

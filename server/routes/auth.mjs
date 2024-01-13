@@ -10,13 +10,37 @@ const usersCollection = 'users';
 const router = Router();
 
 // Registration endpoint
+// eslint-disable-next-line consistent-return
 router.post('/register', async (req, res) => {
   try {
     const { username, password } = req.body;
+
+    const usernamePattern = /.{5,10}$/;
+    if (!usernamePattern.test(username)) {
+      return res
+        .status(500)
+        .json({ error: 'Registration failed: invalid username' });
+    }
+
+    const passwordPattern =
+      /^(?=.*[A-Za-z])(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,12}$/;
+    if (!passwordPattern.test(password)) {
+      return res
+        .status(500)
+        .json({ error: 'Registration failed: invalid password' });
+    }
+
+    const collection = db.collection(usersCollection);
+    const query = { username };
+    const existingUser = await collection.findOne(query);
+    if (existingUser) {
+      return res
+        .status(500)
+        .json({ error: 'Registration failed: username already exists' });
+    }
     // Hash the password before saving it
     const hashedPassword = await hash(password, 10);
     const user = new User({ username, password: hashedPassword });
-    const collection = db.collection(usersCollection);
     const result = await collection.insertOne(user);
     res.status(201).send(result);
   } catch (error) {
@@ -35,13 +59,17 @@ router.post('/login', async (req, res) => {
     const user = await collection.findOne(query);
 
     if (!user) {
-      return res.status(401).json({ error: 'Authentication failed/1' });
+      return res
+        .status(401)
+        .json({ error: 'Authentication failed: invalid username' });
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      return res.status(401).json({ error: 'Authentication failed/2' });
+      return res
+        .status(401)
+        .json({ error: 'Authentication failed: invalid password' });
     }
 
     // Create a JWT token
