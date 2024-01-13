@@ -24,7 +24,6 @@
 - React Testing Library
 - ESLint
 - [React-Helmet](https://www.npmjs.com/package/react-helmet)
-- [React-Awesome-Reveal](https://www.npmjs.com/package/react-awesome-reveal)
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 
 ## Development
@@ -32,6 +31,7 @@
 ### TODO!
 
 - Create 'server/config.env' with ['config.sample-env'](server/config.sample-env) structure.
+- Create 'client/.env' with ['.sample-env'](client/.sample-env) structure.
   - Alternatively, configure *secrets* in your deployment.
 - Update [manifest.json](/client/manifest.json)
 - Update [appInfo.json](/client//appInfo.json)
