@@ -31,6 +31,7 @@ export default function Register() {
   const invalidUsernameMessage = 'Username must be 5-10 characters';
   const invalidPasswordMessage =
     'Password must be 8-12 characters, with at least 1 letter, 1 number, and 1 special character';
+  const invalidPasswordConfirmMessage = 'Passwords do not match';
 
   const handleUsernameChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target,
@@ -54,18 +55,13 @@ export default function Register() {
     HTMLInputElement
   > = ({ target }) => {
     setPasswordConfirm(target.value);
+    if (password !== target.value) {
+      target.setCustomValidity(invalidPasswordConfirmMessage);
+    } else target.setCustomValidity('');
   };
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const passwordConfirmInput = document.getElementById(
-      passwordConfirmId,
-    ) as HTMLInputElement;
-    if (password !== passwordConfirm) {
-      passwordConfirmInput.setCustomValidity('Passwords do not match');
-      return;
-    }
-    passwordConfirmInput.setCustomValidity('');
     const result = await dispatch(register({ username, password }));
     if (result.meta.requestStatus === 'fulfilled') {
       await dispatch(login({ username, password }));
