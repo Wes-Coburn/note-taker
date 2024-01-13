@@ -15,7 +15,7 @@ router.post('/register', async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const usernamePattern = /.{5,10}$/;
+    const usernamePattern = /^\S{5,10}$/;
     if (!usernamePattern.test(username)) {
       return res
         .status(500)

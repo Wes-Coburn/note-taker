@@ -24,7 +24,7 @@ export default function Register() {
   const passwordId = useId();
   const passwordConfirmId = useId();
 
-  const usernamePattern: RegExp = /.{5,10}$/;
+  const usernamePattern: RegExp = /^\S{5,10}$/;
   const passwordPattern: RegExp =
     /^(?=.*[A-Za-z])(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,12}$/;
 
