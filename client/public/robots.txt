@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://react-static-wo1g.onrender.com/sitemap.xml
+Sitemap: https://note-taker-1ej3.onrender.com

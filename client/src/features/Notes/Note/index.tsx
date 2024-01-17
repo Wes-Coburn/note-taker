@@ -28,12 +28,12 @@ export default function Note({ _id, text }: IProps) {
   };
 
   return (
-    <div className="m-6 border-2 border-solid border-blue-900">
+    <div className="mx-6 my-12 h-32 w-full lg:w-[45%]">
       <textarea
         defaultValue={text}
         disabled={!isEditable}
         onChange={handleChange}
-        className={`w-full text-center ${
+        className={`h-full w-full resize-none text-center ${
           isEditable ? 'text-black' : 'text-gray-500'
         }`}
       />

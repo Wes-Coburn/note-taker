@@ -25,11 +25,11 @@ export default function NotesList({ notes }: IProps) {
       return <p className="pt-12">You don&apos;t have any notes.</p>;
     }
 
-    const notesList = notes.map((note) => (
-      <Note key={note._id} _id={note._id} text={note.text} />
-    ));
+    const notesList = notes
+      .map((note) => <Note key={note._id} _id={note._id} text={note.text} />)
+      .reverse();
 
-    return notesList.reverse();
+    return <div className="flex flex-wrap justify-between">{notesList}</div>;
   } catch (e) {
     return <Error />;
   }

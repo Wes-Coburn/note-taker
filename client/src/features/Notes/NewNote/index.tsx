@@ -20,17 +20,15 @@ export default function NewNote() {
   };
 
   return (
-    <div className="mx-6">
+    <div className="mx-auto max-w-[70vw] lg:max-w-[50vw]">
       <p className="pb-2">New Note</p>
       <form onSubmit={handleSubmit}>
-        <div>
-          <textarea
-            value={newNote}
-            onChange={handleChange}
-            required
-            className="w-full"
-          />
-        </div>
+        <textarea
+          value={newNote}
+          onChange={handleChange}
+          required
+          className="h-32 w-full resize-none"
+        />
         <button
           type="submit"
           className="rounded-lg bg-gray-300 px-2 py-1 hover:bg-gray-400"

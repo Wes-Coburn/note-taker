@@ -226,8 +226,13 @@ export default function Footer() {
           </li>
         </ul>
       </div>
-      <div className="pb-8 text-center text-xl font-semibold text-gray-900 hover:text-gray-600">
-        <a href="https://wescoburn.dev/">WesCoburn.dev</a>
+      <div className="pb-8 text-center">
+        <a
+          href="https://wescoburn.dev/"
+          className="text-xl font-semibold text-gray-900 hover:text-gray-600"
+        >
+          WesCoburn.dev
+        </a>
       </div>
     </footer>
   );
